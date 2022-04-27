@@ -39,7 +39,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public AppRole saveNewRole(String roleName, String description) {
-        AppRole appRole = appRolerRepository.findByRolename(roleName);
+        AppRole appRole = appRolerRepository.findByRoleName(roleName);
         if(appRole!=null) throw new RuntimeException("Role "+roleName+"already exist");
         appRole = new AppRole();
         appRole.setRoleName(roleName);
@@ -52,7 +52,7 @@ public class SecurityServiceImpl implements SecurityService {
     public void addRoleToUser(String username, String roleName) {
        AppUser appUser = appUserRepository.findByUsername(username);
        if(appUser==null) throw new RuntimeException("User Not found");
-       AppRole appRole = appRolerRepository.findByRolename(roleName);
+       AppRole appRole = appRolerRepository.findByRoleName(roleName);
        if(appRole==null) throw new RuntimeException("Role Not found");
        appUser.getAppRoles().add(appRole);
     }
@@ -61,7 +61,7 @@ public class SecurityServiceImpl implements SecurityService {
     {
         AppUser appUser = appUserRepository.findByUsername(username);
         if(appUser==null) throw new RuntimeException("User Not found");
-        AppRole appRole = appRolerRepository.findByRolename(roleName);
+        AppRole appRole = appRolerRepository.findByRoleName(roleName);
         if(appRole==null) throw new RuntimeException("Role Not found");
         appUser.getAppRoles().remove(appRole);
     }

@@ -2,7 +2,9 @@ package com.example.tp_controle.sec.service;
 
 import com.example.tp_controle.sec.entities.AppRole;
 import com.example.tp_controle.sec.entities.AppUser;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface SecurityService {
 AppUser saveNewUser(String username , String password , String rePassword);
 AppRole saveNewRole(String roleName , String description);

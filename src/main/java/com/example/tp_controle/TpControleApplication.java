@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
 
@@ -16,7 +18,12 @@ public class TpControleApplication {
     public static void main(String[] args) {
         SpringApplication.run(TpControleApplication.class, args);
     }
-   // @Bean
+    @Bean
+    PasswordEncoder passwordEncoder ( ) {
+        return new BCryptPasswordEncoder();
+    }
+
+    // @Bean
     CommandLineRunner commandLineRunner(PatientRepository patientRepository){
         return args -> {
             patientRepository.save(new Patient(null , "TAOUSSI", new Date() , false , 20));
@@ -30,7 +37,7 @@ public class TpControleApplication {
 
         };
     }
-    @Bean
+    //@Bean
     CommandLineRunner saveUsers(SecurityService securityService)
     {
         return args -> {

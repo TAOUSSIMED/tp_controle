@@ -22,9 +22,10 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private UserDetailsService userDetailsService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder passwordEncoder = passwordEncoder();
+
         /*
         String encodedPWD = passwordEncoder.encode("1234");
         System.out.println(encodedPWD);
@@ -44,8 +45,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin();
         http.authorizeRequests().antMatchers("/").permitAll();
-        http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/user/**" ).hasRole("USER");
+        http.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/user/**" ).hasAuthority("USER");
         http.authorizeRequests().antMatchers("/webjars/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.exceptionHandling().accessDeniedPage ("/403");
@@ -54,10 +55,6 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-    }
-    @Bean
-    PasswordEncoder passwordEncoder ( ) {
-        return new BCryptPasswordEncoder();
     }
 
 }
