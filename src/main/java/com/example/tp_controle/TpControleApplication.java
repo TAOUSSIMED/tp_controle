@@ -1,6 +1,8 @@
 package com.example.tp_controle;
 
+import com.example.tp_controle.entities.Medecin;
 import com.example.tp_controle.entities.Patient;
+import com.example.tp_controle.repositories.MedecinRepository;
 import com.example.tp_controle.repositories.PatientRepository;
 import com.example.tp_controle.sec.service.SecurityService;
 import org.springframework.boot.CommandLineRunner;
@@ -52,6 +54,20 @@ public class TpControleApplication {
             securityService.addRoleToUser("taoussi","ADMIN");
             securityService.addRoleToUser("taoussi","USER");
             securityService.addRoleToUser("mohamed2" , "USER");
+
+        };
+    }
+     //@Bean
+    CommandLineRunner commandLineRunner(MedecinRepository medecinRepository){
+        return args -> {
+            medecinRepository.save(new Medecin(null , "TAOUSSI", new Date() , "dermat"));
+            medecinRepository.save(new Medecin(null , "MOHAMED", new Date() , "cardio"));
+            medecinRepository.save(new Medecin(null , "TAOUSSI2", new Date() , "psy"));
+            medecinRepository.save(new Medecin(null , "TAOUSSI3", new Date() ,"pediat"));
+
+            medecinRepository.findAll().forEach(p ->{
+                System.out.println(p.getNom());
+            });
 
         };
     }
