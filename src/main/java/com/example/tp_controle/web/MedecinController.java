@@ -8,8 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
@@ -39,6 +43,27 @@ public class MedecinController {
     public String formMedecins(Model model){
         model.addAttribute("medecin" , new Medecin());
         return "formMedecins";
+    }
+    @PostMapping(path="/admin/medecin/save")
+    public String save (Model model, @Valid Medecin medecin , BindingResult bindingResult ,
+                        @RequestParam(defaultValue = "0") int page , @RequestParam(defaultValue = "") String keyword){
+        if(bindingResult.hasErrors())
+        {
+            return "formMedecins";
+        }
+        medecinRepository.save (medecin);
+        return "redirect:/user/medecin?page="+page+"&keyword="+keyword;
+
+    }
+    @GetMapping ("/admin/medecin/editMedecin")
+    public String editMedecin(Model model , Long id , String keyword , int page){
+        Medecin medecin =medecinRepository.findById(id).orElse(null);
+        if (medecin==null) throw new RuntimeException ("Medecin introuvable");
+        model.addAttribute("medecin" ,medecin);
+        model.addAttribute ( "page",page);
+        model.addAttribute(  "keyword", keyword);
+
+        return "editMedecins";
     }
 
 

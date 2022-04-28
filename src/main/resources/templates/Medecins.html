@@ -15,7 +15,7 @@
     <div class="card">
         <div class="card-header">Liste des Medecins</div>
         <div class="card-body">
-            <form method="get" th:action="@{/user/index}">
+            <form method="get" th:action="@{/user/medecin}">
                 <label>Key word</label>
                 <input type="text" name="keyword" th:value="${keyword}">
                 <button type="submit" class="btn btn-primary">Chercher</button>
@@ -44,7 +44,7 @@
                         </a>
                     </td>
                     <td sec:authorize="hasAuthority('ADMIN')">
-                        <a class="btn btn-success" th:href="@{/admin/editPatient(id=${p.id} , keyword=${keyword} , page=${currentPage})}">
+                        <a class="btn btn-success" th:href="@{/admin/medecin/editMedecin(id=${p.id} , keyword=${keyword} , page=${currentPage})}">
                             Edit
                         </a>
                     </td>
